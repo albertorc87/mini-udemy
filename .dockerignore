@@ -1,0 +1,33 @@
+# Dependencias
+/vendor
+/node_modules
+
+
+# Cache y logs
+/var
+/.cache
+
+# Git
+/.git
+/.gitignore
+
+# Docker
+/docker/**
+!/docker/php/docker-entrypoint.sh
+/docker-compose.yml
+.dockerignore
+
+# Documentación
+README.md
+TUTORIAL.md
+
+# IDE
+/.idea
+/.vscode
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
