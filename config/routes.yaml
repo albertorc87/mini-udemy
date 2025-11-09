@@ -1,5 +1,4 @@
-controllers:
-    resource:
-        path: ../src/Controller/
-        namespace: Udemy\Controller
-    type: attribute
+# Rutas definidas en archivos YAML
+course_routes:
+    resource: routes/Course/course.yaml
+    type: yaml

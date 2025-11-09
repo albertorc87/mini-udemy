@@ -6,7 +6,7 @@ services:
     volumes:
       - ./:/var/www/html
     environment:
-      APP_ENV: local
+      APP_ENV: dev
     depends_on:
       - db
       - rabbit
@@ -22,7 +22,7 @@ services:
   db:
     image: postgres:16-alpine
     environment:
-      POSTGRES_DB: app
+      POSTGRES_DB: udemy
       POSTGRES_USER: app
       POSTGRES_PASSWORD: secret
     ports:

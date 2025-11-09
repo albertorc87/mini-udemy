@@ -1,0 +1,4 @@
+course_list:
+    path: /v1/courses
+    controller: Udemy\Http\V1\Controller\Course\Course\CourseListController
+    methods:  [GET]

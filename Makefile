@@ -16,6 +16,12 @@ composer:
 migrate:
 	docker compose exec php php bin/console doctrine:migrations:migrate -n
 
+migration:
+	docker compose exec php php bin/console make:migration
+
+console:
+	docker compose exec php php bin/console $(cmd)
+
 workers:
 	docker compose exec php php bin/console messenger:consume async -vv
 
