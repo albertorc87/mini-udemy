@@ -2,3 +2,6 @@
 course_routes:
     resource: routes/Course/course.yaml
     type: yaml
+user_routes:
+    resource: routes/User/user.yaml
+    type: yaml

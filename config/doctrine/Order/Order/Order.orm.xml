@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping">
+
+    <entity name="Udemy\Order\Order\Domain\Order" table="order">
+        <id name="id" type="order_id">
+            <generator strategy="NONE"/>
+        </id>
+
+        <many-to-one field="user" target-entity="Udemy\User\User\Domain\User">
+            <join-column name="user_id" referenced-column-name="id" on-delete="CASCADE"/>
+        </many-to-one>
+
+        <many-to-one field="coupon" target-entity="Udemy\Coupon\Coupon\Domain\Coupon">
+            <join-column name="coupon_id" referenced-column-name="id" on-delete="SET NULL" nullable="true"/>
+        </many-to-one>
+
+        <embedded name="subtotal" class="Udemy\Order\Order\Domain\OrderSubtotal" use-column-prefix="false"/>
+        <embedded name="discount" class="Udemy\Order\Order\Domain\OrderDiscount" use-column-prefix="false"/>
+        <embedded name="total" class="Udemy\Order\Order\Domain\OrderTotal" use-column-prefix="false"/>
+        <embedded name="status" class="Udemy\Order\Order\Domain\OrderStatus" use-column-prefix="false"/>
+        <field name="createdAt" type="datetime_immutable" column="created_at"/>
+        <field name="updatedAt" type="datetime_immutable" column="updated_at"/>
+    </entity>
+
+</doctrine-mapping>
+

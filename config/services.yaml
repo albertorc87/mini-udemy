@@ -15,6 +15,37 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     Udemy\:
         resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+            - '../src/Http/V1/Request/'
+
+    # Controllers configuration
+    Udemy\Http\V1\Controller\:
+        resource: '../src/Http/V1/Controller/'
+        tags: ['controller.service_arguments']
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    # Command Bus configuration
+    Udemy\Shared\Domain\Bus\Command\CommandBus:
+        alias: Udemy\Shared\Infrastructure\Bus\Command\SymfonyCommandBus
+
+    # Event Bus configuration
+    Udemy\Shared\Domain\Bus\Event\EventBus:
+        alias: Udemy\Shared\Infrastructure\Bus\Event\SymfonyEventBus
+
+    # User Repository configuration
+    Udemy\User\User\Domain\Repository\UserRepository:
+        alias: Udemy\User\User\Infrastructure\Persistence\Doctrine\DoctrineUserRepository
+
+    # Email Sender configuration
+    Udemy\User\User\Application\Service\EmailSender:
+        alias: Udemy\User\User\Infrastructure\Service\MailerEmailSender
+
+    # MailerEmailSender configuration
+    Udemy\User\User\Infrastructure\Service\MailerEmailSender:
+        arguments:
+            $fromEmail: '%env(MAILER_FROM_EMAIL)%'

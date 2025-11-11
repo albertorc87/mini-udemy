@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping">
+
+    <entity name="Udemy\Course\Rating\Domain\CourseRating" table="course_rating">
+        <id name="id" type="course_rating_id">
+            <generator strategy="NONE"/>
+        </id>
+
+        <many-to-one field="user" target-entity="Udemy\User\User\Domain\User">
+            <join-column name="user_id" referenced-column-name="id" on-delete="CASCADE"/>
+        </many-to-one>
+
+        <many-to-one field="course" target-entity="Udemy\Course\Course\Domain\Course">
+            <join-column name="course_id" referenced-column-name="id" on-delete="CASCADE"/>
+        </many-to-one>
+
+        <embedded name="rating" class="Udemy\Course\Rating\Domain\CourseRatingRating" use-column-prefix="false"/>
+        <embedded name="comment" class="Udemy\Course\Rating\Domain\CourseRatingComment" nullable="true" use-column-prefix="false"/>
+        <field name="createdAt" type="datetime_immutable" column="created_at"/>
+        <field name="updatedAt" type="datetime_immutable" column="updated_at"/>
+
+        <unique-constraints>
+            <unique-constraint name="UNIQ_5B0A3A0DA76ED395591CC992" columns="user_id,course_id"/>
+        </unique-constraints>
+    </entity>
+
+</doctrine-mapping>
+

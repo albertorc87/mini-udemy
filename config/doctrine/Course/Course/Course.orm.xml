@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping">
+
+    <entity name="Udemy\Course\Course\Domain\Course" table="course">
+        <id name="id" type="course_id">
+            <generator strategy="NONE"/>
+        </id>
+
+        <many-to-one field="teacher" target-entity="Udemy\User\User\Domain\User">
+            <join-column name="teacher_id" referenced-column-name="id" on-delete="CASCADE"/>
+        </many-to-one>
+
+        <embedded name="title" class="Udemy\Course\Course\Domain\CourseTitle" use-column-prefix="false"/>
+        <embedded name="subtitle" class="Udemy\Course\Course\Domain\CourseSubtitle" nullable="true" use-column-prefix="false"/>
+        <embedded name="description" class="Udemy\Course\Course\Domain\CourseDescription" nullable="true" use-column-prefix="false"/>
+        <embedded name="price" class="Udemy\Course\Course\Domain\CoursePrice" use-column-prefix="false"/>
+        <embedded name="averageRating" class="Udemy\Course\Course\Domain\CourseAverageRating" use-column-prefix="false"/>
+        <embedded name="totalRatings" class="Udemy\Course\Course\Domain\CourseTotalRatings" use-column-prefix="false"/>
+        <embedded name="status" class="Udemy\Course\Course\Domain\CourseStatus" use-column-prefix="false"/>
+        <field name="createdAt" type="datetime_immutable" column="created_at"/>
+        <field name="updatedAt" type="datetime_immutable" column="updated_at"/>
+    </entity>
+
+</doctrine-mapping>
+

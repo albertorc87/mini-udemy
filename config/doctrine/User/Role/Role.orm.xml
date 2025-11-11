@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping">
+
+    <entity name="Udemy\User\Role\Domain\Role" table="role">
+        <id name="id" type="role_id">
+            <generator strategy="NONE"/>
+        </id>
+
+        <embedded name="name" class="Udemy\User\Role\Domain\RoleName" use-column-prefix="false"/>
+        <field name="createdAt" type="datetime_immutable" column="created_at"/>
+        <field name="updatedAt" type="datetime_immutable" column="updated_at"/>
+
+        <unique-constraints>
+            <unique-constraint name="UNIQ_57698A6A5E237E06" columns="name"/>
+        </unique-constraints>
+
+        <many-to-many field="users" target-entity="Udemy\User\User\Domain\User" mapped-by="roles"/>
+    </entity>
+
+</doctrine-mapping>
+

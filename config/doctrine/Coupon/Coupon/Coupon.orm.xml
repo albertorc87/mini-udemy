@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping">
+
+    <entity name="Udemy\Coupon\Coupon\Domain\Coupon" table="coupon">
+        <id name="id" type="coupon_id">
+            <generator strategy="NONE"/>
+        </id>
+
+        <embedded name="code" class="Udemy\Coupon\Coupon\Domain\CouponCode" use-column-prefix="false"/>
+        <embedded name="discountType" class="Udemy\Coupon\Coupon\Domain\CouponDiscountType" use-column-prefix="false"/>
+        <embedded name="discountValue" class="Udemy\Coupon\Coupon\Domain\CouponDiscountValue" use-column-prefix="false"/>
+        <embedded name="minimumPrice" class="Udemy\Coupon\Coupon\Domain\CouponMinimumPrice" use-column-prefix="false"/>
+        <embedded name="isGeneral" class="Udemy\Coupon\Coupon\Domain\CouponIsGeneral" use-column-prefix="false"/>
+        <embedded name="maxUses" class="Udemy\Coupon\Coupon\Domain\CouponMaxUses" nullable="true" use-column-prefix="false"/>
+        <embedded name="currentUses" class="Udemy\Coupon\Coupon\Domain\CouponCurrentUses" use-column-prefix="false"/>
+        <embedded name="isActive" class="Udemy\Coupon\Coupon\Domain\CouponIsActive" use-column-prefix="false"/>
+
+        <many-to-one field="teacher" target-entity="Udemy\User\User\Domain\User">
+            <join-column name="teacher_id" referenced-column-name="id" on-delete="SET NULL" nullable="true"/>
+        </many-to-one>
+
+        <field name="validFrom" type="datetime_immutable" nullable="true" column="valid_from"/>
+        <field name="validUntil" type="datetime_immutable" nullable="true" column="valid_until"/>
+        <field name="createdAt" type="datetime_immutable" column="created_at"/>
+        <field name="updatedAt" type="datetime_immutable" column="updated_at"/>
+
+        <unique-constraints>
+            <unique-constraint name="UNIQ_64BF3F0277153098" columns="code"/>
+        </unique-constraints>
+    </entity>
+
+</doctrine-mapping>
+

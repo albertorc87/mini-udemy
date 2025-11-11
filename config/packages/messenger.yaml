@@ -13,3 +13,4 @@ framework:
             # Route your messages to the transports
             # 'App\Message\YourMessage': async
             Udemy\Shared\Domain\Bus\Event\DomainEvent: async
+            Udemy\User\User\Domain\Event\UserCreated: async

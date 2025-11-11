@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping">
+
+    <embeddable name="Udemy\Coupon\Coupon\Domain\CouponCode">
+        <field name="value" type="string" length="50" column="code"/>
+    </embeddable>
+
+</doctrine-mapping>
+

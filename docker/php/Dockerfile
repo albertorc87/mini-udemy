@@ -1,10 +1,39 @@
 FROM php:8.4-fpm
 
 RUN apt-get update \
-&& apt-get install -y git zip unzip libicu-dev libpq-dev libzip-dev librabbitmq-dev \
-&& docker-php-ext-install intl opcache pdo pdo_pgsql zip \
+&& apt-get install -y \
+    git \
+    zip \
+    unzip \
+    libicu-dev \
+    libpq-dev \
+    libzip-dev \
+    librabbitmq-dev \
+    libxml2-dev \
+    libpng-dev \
+    libjpeg-dev \
+    libfreetype6-dev \
+    libonig-dev \
+    curl \
+    libcurl4-openssl-dev \
+&& docker-php-ext-configure gd --with-freetype --with-jpeg \
+&& docker-php-ext-install \
+    intl \
+    opcache \
+    pdo \
+    pdo_pgsql \
+    zip \
+    bcmath \
+    mbstring \
+    xml \
+    curl \
+    exif \
+    sockets \
+    gd \
 && pecl install amqp \
-&& docker-php-ext-enable amqp
+&& docker-php-ext-enable amqp \
+&& apt-get clean \
+&& rm -rf /var/lib/apt/lists/*
 
 
 # Composer
@@ -23,5 +52,18 @@ RUN if [ ! -d "vendor" ]; then composer install --no-interaction --prefer-dist -
 COPY docker/php/docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
-# Opcional: mejorar rendimiento de Symfony en dev
-RUN echo "memory_limit=512M" > /usr/local/etc/php/conf.d/memory.ini
+# Configuraciones recomendadas de PHP para Symfony
+RUN echo "memory_limit=512M" > /usr/local/etc/php/conf.d/memory.ini \
+&& echo "upload_max_filesize=64M" > /usr/local/etc/php/conf.d/uploads.ini \
+&& echo "post_max_size=64M" >> /usr/local/etc/php/conf.d/uploads.ini \
+&& echo "date.timezone=UTC" > /usr/local/etc/php/conf.d/timezone.ini \
+&& echo "max_execution_time=300" > /usr/local/etc/php/conf.d/execution.ini \
+&& echo "max_input_time=300" >> /usr/local/etc/php/conf.d/execution.ini
+
+# Configuración de OPcache para mejor rendimiento
+RUN echo "opcache.enable=1" > /usr/local/etc/php/conf.d/opcache.ini \
+&& echo "opcache.memory_consumption=256" >> /usr/local/etc/php/conf.d/opcache.ini \
+&& echo "opcache.interned_strings_buffer=16" >> /usr/local/etc/php/conf.d/opcache.ini \
+&& echo "opcache.max_accelerated_files=20000" >> /usr/local/etc/php/conf.d/opcache.ini \
+&& echo "opcache.validate_timestamps=1" >> /usr/local/etc/php/conf.d/opcache.ini \
+&& echo "opcache.revalidate_freq=0" >> /usr/local/etc/php/conf.d/opcache.ini

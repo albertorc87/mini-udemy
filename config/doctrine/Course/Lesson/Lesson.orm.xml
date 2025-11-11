@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping">
+
+    <entity name="Udemy\Course\Lesson\Domain\Lesson" table="course_lesson">
+        <id name="id" type="lesson_id">
+            <generator strategy="NONE"/>
+        </id>
+
+        <many-to-one field="course" target-entity="Udemy\Course\Course\Domain\Course">
+            <join-column name="course_id" referenced-column-name="id" on-delete="CASCADE"/>
+        </many-to-one>
+
+        <embedded name="title" class="Udemy\Course\Lesson\Domain\LessonTitle" use-column-prefix="false"/>
+        <embedded name="description" class="Udemy\Course\Lesson\Domain\LessonDescription" nullable="true" use-column-prefix="false"/>
+        <embedded name="videoUrl" class="Udemy\Course\Lesson\Domain\LessonVideoUrl" nullable="true" use-column-prefix="false"/>
+        <embedded name="content" class="Udemy\Course\Lesson\Domain\LessonContent" nullable="true" use-column-prefix="false"/>
+        <embedded name="order" class="Udemy\Course\Lesson\Domain\LessonOrder" use-column-prefix="false"/>
+        <field name="createdAt" type="datetime_immutable" column="created_at"/>
+        <field name="updatedAt" type="datetime_immutable" column="updated_at"/>
+    </entity>
+
+</doctrine-mapping>
+

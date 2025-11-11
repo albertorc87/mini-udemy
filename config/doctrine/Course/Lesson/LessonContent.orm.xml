@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping">
+
+    <embeddable name="Udemy\Course\Lesson\Domain\LessonContent">
+        <field name="value" type="text" nullable="true" column="content"/>
+    </embeddable>
+
+</doctrine-mapping>
+

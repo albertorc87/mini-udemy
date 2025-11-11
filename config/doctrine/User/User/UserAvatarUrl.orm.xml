@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping">
+
+    <embeddable name="Udemy\User\User\Domain\UserAvatarUrl">
+        <field name="value" type="string" length="500" nullable="true" column="avatar_url"/>
+    </embeddable>
+
+</doctrine-mapping>
+
