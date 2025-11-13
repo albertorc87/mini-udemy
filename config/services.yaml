@@ -41,11 +41,25 @@ services:
     Udemy\User\User\Domain\Repository\UserRepository:
         alias: Udemy\User\User\Infrastructure\Persistence\Doctrine\DoctrineUserRepository
 
+    # Role Repository configuration
+    Udemy\User\Role\Domain\Repository\RoleRepository:
+        alias: Udemy\User\Role\Infrastructure\Persistence\Doctrine\DoctrineRoleRepository
+
     # Email Sender configuration
     Udemy\User\User\Application\Service\EmailSender:
         alias: Udemy\User\User\Infrastructure\Service\MailerEmailSender
 
     # MailerEmailSender configuration
     Udemy\User\User\Infrastructure\Service\MailerEmailSender:
+        lazy: true
         arguments:
             $fromEmail: '%env(MAILER_FROM_EMAIL)%'
+
+    # ConfirmationUrlGenerator configuration
+    Udemy\User\User\Application\Service\ConfirmationUrlGenerator:
+        alias: Udemy\User\User\Infrastructure\Service\JWTConfirmationUserUrlGenerator
+
+    # JWTConfirmationUserUrlGenerator configuration
+    Udemy\User\User\Infrastructure\Service\JWTConfirmationUserUrlGenerator:
+        arguments:
+            $secret: '%env(EMAIL_SECRET)%'

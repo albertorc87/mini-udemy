@@ -36,65 +36,68 @@ doctrine:
                 dir: '%kernel.project_dir%/config/doctrine/User/User'
                 prefix: 'Udemy\User\User\Domain'
                 alias: User
-                mapping: true
             Role:
                 type: xml
                 is_bundle: false
                 dir: '%kernel.project_dir%/config/doctrine/User/Role'
                 prefix: 'Udemy\User\Role\Domain'
                 alias: Role
-                mapping: true
             Course:
                 type: xml
                 is_bundle: false
                 dir: '%kernel.project_dir%/config/doctrine/Course/Course'
                 prefix: 'Udemy\Course\Course\Domain'
                 alias: Course
-                mapping: true
             Lesson:
                 type: xml
                 is_bundle: false
                 dir: '%kernel.project_dir%/config/doctrine/Course/Lesson'
                 prefix: 'Udemy\Course\Lesson\Domain'
                 alias: Lesson
-                mapping: true
             UserCourse:
                 type: xml
                 is_bundle: false
                 dir: '%kernel.project_dir%/config/doctrine/User/Course'
                 prefix: 'Udemy\User\Course\Domain'
                 alias: UserCourse
-                mapping: true
             CourseRating:
                 type: xml
                 is_bundle: false
                 dir: '%kernel.project_dir%/config/doctrine/Course/Rating'
                 prefix: 'Udemy\Course\Rating\Domain'
                 alias: CourseRating
-                mapping: true
             Coupon:
                 type: xml
                 is_bundle: false
                 dir: '%kernel.project_dir%/config/doctrine/Coupon/Coupon'
                 prefix: 'Udemy\Coupon\Coupon\Domain'
                 alias: Coupon
-                mapping: true
             Order:
                 type: xml
                 is_bundle: false
                 dir: '%kernel.project_dir%/config/doctrine/Order/Order'
                 prefix: 'Udemy\Order\Order\Domain'
                 alias: Order
-                mapping: true
             OrderItem:
                 type: xml
                 is_bundle: false
                 dir: '%kernel.project_dir%/config/doctrine/Order/Item'
                 prefix: 'Udemy\Order\Item\Domain'
                 alias: OrderItem
-                mapping: true
         controller_resolver:
             auto_mapping: false
+
+when@dev:
+    doctrine:
+        orm:
+            metadata_cache_driver:
+                type: pool
+                pool: doctrine.system_cache_pool
+    framework:
+        cache:
+            pools:
+                doctrine.system_cache_pool:
+                    adapter: cache.app
 
 when@test:
     doctrine:

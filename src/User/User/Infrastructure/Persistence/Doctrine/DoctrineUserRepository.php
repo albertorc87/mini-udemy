@@ -27,7 +27,7 @@ final class DoctrineUserRepository implements UserRepository
 	{
 		return $this->entityManager
 			->getRepository(User::class)
-			->findOneBy(['email' => $email]);
+			->findOneBy(['email.value' => $email->value()]);
 	}
 
 	public function findById(UserId $id): ?User

@@ -30,8 +30,8 @@ RUN apt-get update \
     exif \
     sockets \
     gd \
-&& pecl install amqp \
-&& docker-php-ext-enable amqp \
+&& pecl install amqp apcu \
+&& docker-php-ext-enable amqp apcu \
 && apt-get clean \
 && rm -rf /var/lib/apt/lists/*
 
@@ -60,10 +60,10 @@ RUN echo "memory_limit=512M" > /usr/local/etc/php/conf.d/memory.ini \
 && echo "max_execution_time=300" > /usr/local/etc/php/conf.d/execution.ini \
 && echo "max_input_time=300" >> /usr/local/etc/php/conf.d/execution.ini
 
-# Configuración de OPcache para mejor rendimiento
+# Configuración de OPcache para desarrollo (valida cambios cada 2 segundos)
 RUN echo "opcache.enable=1" > /usr/local/etc/php/conf.d/opcache.ini \
 && echo "opcache.memory_consumption=256" >> /usr/local/etc/php/conf.d/opcache.ini \
 && echo "opcache.interned_strings_buffer=16" >> /usr/local/etc/php/conf.d/opcache.ini \
 && echo "opcache.max_accelerated_files=20000" >> /usr/local/etc/php/conf.d/opcache.ini \
 && echo "opcache.validate_timestamps=1" >> /usr/local/etc/php/conf.d/opcache.ini \
-&& echo "opcache.revalidate_freq=0" >> /usr/local/etc/php/conf.d/opcache.ini
+&& echo "opcache.revalidate_freq=2" >> /usr/local/etc/php/conf.d/opcache.ini

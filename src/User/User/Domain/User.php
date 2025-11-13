@@ -16,6 +16,9 @@ use Udemy\User\User\Domain\UserPasswordHash;
 use Udemy\User\User\Domain\Service\UserEmailUniquenessChecker;
 use Udemy\User\User\Domain\UserStatus;
 use Udemy\User\User\Domain\UserId;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use DateTimeInterface;
 
 /**
  * Entidad User que implementa UserInterface para Symfony Security
@@ -32,8 +35,11 @@ class User extends AggregateRoot implements UserInterface, PasswordAuthenticated
     private \DateTimeImmutable $createdAt;
     private \DateTimeImmutable $updatedAt;
 
-    /** @var Role[] */
-    private array $roles = [];
+    /** @var Collection<int, Role> */ // Usar la anotación para mayor claridad (opcional)
+    // ANTES: private array $roles = [];
+
+    // DESPUÉS: Cambiar el tipo y la inicialización
+    private Collection $roles;
 
     public function __construct(
         UserId $id,
@@ -51,6 +57,7 @@ class User extends AggregateRoot implements UserInterface, PasswordAuthenticated
         $this->status = $status ?? UserStatus::pending();
         $this->createdAt = new \DateTimeImmutable();
         $this->updatedAt = new \DateTimeImmutable();
+        $this->roles = new ArrayCollection();
     }
 
 	/**
@@ -75,7 +82,9 @@ class User extends AggregateRoot implements UserInterface, PasswordAuthenticated
 		$user->record(new UserCreated(
 			$id->value(),
 			$email->value(),
-			$name->value()
+			$name->value(),
+            uniqid(),
+            (new \DateTimeImmutable())->format(DateTimeInterface::ATOM),
 		));
 
 		return $user;
@@ -140,36 +149,33 @@ class User extends AggregateRoot implements UserInterface, PasswordAuthenticated
         return $this->updatedAt;
     }
 
-    /**
-     * Añade un rol al usuario
-     */
     public function addRole(Role $role): void
     {
-        if (!in_array($role, $this->roles, true)) {
-            $this->roles[] = $role;
+        // Usar el método 'contains' de la Collection
+        if (!$this->roles->contains($role)) { 
+            // Usar el método 'add' de la Collection
+            $this->roles->add($role); 
             $this->updatedAt = new \DateTimeImmutable();
         }
     }
 
-    /**
-     * Elimina un rol del usuario
-     */
     public function removeRole(Role $role): void
     {
-        $key = array_search($role, $this->roles, true);
-        if ($key !== false) {
-            unset($this->roles[$key]);
-            $this->roles = array_values($this->roles);
+        // Usar el método 'removeElement' de la Collection
+        if ($this->roles->contains($role)) {
+            $this->roles->removeElement($role);
             $this->updatedAt = new \DateTimeImmutable();
         }
     }
 
     /**
      * @return Role[]
+     * Retorna las entidades de rol como un array nativo (para el dominio)
      */
     public function getRoleEntities(): array
     {
-        return $this->roles;
+        // Convertir la Collection a un array nativo si es necesario fuera del mapeo
+        return $this->roles->toArray(); 
     }
 
     // ========== UserInterface Implementation ==========
@@ -189,9 +195,11 @@ class User extends AggregateRoot implements UserInterface, PasswordAuthenticated
      */
     public function getRoles(): array
     {
+        // La Collection es iterable, por lo que array_map funciona, 
+        // pero es más explícito usar toArray() primero si quieres un array nativo.
         return array_map(
             fn(Role $role) => $role->getName()->value(),
-            $this->roles
+            $this->roles->toArray() // Mejor ser explícito para evitar problemas de iteración
         );
     }
 

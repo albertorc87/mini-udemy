@@ -1,4 +1,9 @@
-course_list:
+create_user:
     path: /v1/users
     controller: Udemy\Http\V1\Controller\User\User\CreateUserController
     methods:  [POST]
+
+confirm_user:
+    path: /v1/users/confirm/{jwtToken}
+    controller: Udemy\Http\V1\Controller\User\User\ConfirmUserController
+    methods:  [GET]

@@ -12,8 +12,8 @@ final class UserCreated extends DomainEvent
 		string $aggregateId,
 		private readonly string $email,
 		private readonly string $name,
-		string $eventId = null,
-		string $occurredOn = null
+		string $eventId,
+		string $occurredOn
 	) {
 		parent::__construct($aggregateId, $eventId, $occurredOn);
 	}

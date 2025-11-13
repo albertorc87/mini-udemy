@@ -79,13 +79,7 @@ final class CreateUserController
 				['error' => $e->getMessage()],
 				Response::HTTP_BAD_REQUEST
 			);
-		} catch (\Exception $e) {
-			dd($e);
-			return new JsonResponse(
-				['error' => 'An error occurred while creating the user'],
-				Response::HTTP_INTERNAL_SERVER_ERROR
-			);
-		}
+		} 
 	}
 }
 

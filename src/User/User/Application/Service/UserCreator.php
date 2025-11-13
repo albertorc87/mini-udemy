@@ -26,7 +26,7 @@ final class UserCreator
 	) {
 	}
 
-	public function create(
+	public function __invoke(
 		string $email,
 		string $password,
 		string $name,

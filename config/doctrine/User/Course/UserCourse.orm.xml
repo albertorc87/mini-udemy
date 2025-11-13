@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping">
 
-    <entity name="Udemy\User\Course\Domain\UserCourse" table="user_course">
+    <entity name="Udemy\User\Course\Domain\UserCourse" table="&quot;user_course&quot;">
         <id name="id" type="user_course_id">
             <generator strategy="NONE"/>
         </id>

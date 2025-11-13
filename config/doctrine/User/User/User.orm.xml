@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping">
 
-    <entity name="Udemy\User\User\Domain\User" table="user">
-        <id name="id" type="user_id">
+    <entity name="Udemy\User\User\Domain\User" table="&quot;user&quot;">
+        <id name="id" type="user_id" column="id" length="26">
             <generator strategy="NONE"/>
         </id>
 
@@ -19,7 +19,7 @@
         </unique-constraints>
 
         <many-to-many field="roles" target-entity="Udemy\User\Role\Domain\Role" inversed-by="users">
-            <join-table name="user_role">
+            <join-table name="&quot;user_role&quot;">
                 <join-columns>
                     <join-column name="user_id" referenced-column-name="id" on-delete="CASCADE"/>
                 </join-columns>

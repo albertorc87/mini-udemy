@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Udemy\User\Role\Domain;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Udemy\User\Role\Domain\RoleId;
 use Udemy\User\Role\Domain\RoleName;
 use Udemy\User\User\Domain\User;
@@ -19,8 +21,8 @@ class Role
     private \DateTimeImmutable $createdAt;
     private \DateTimeImmutable $updatedAt;
 
-    /** @var User[] */
-    private array $users = [];
+    /** @var Collection<int, User> */
+    private Collection $users;
 
     public function __construct(
         RoleId $id,
@@ -30,6 +32,7 @@ class Role
         $this->name = $name;
         $this->createdAt = new \DateTimeImmutable();
         $this->updatedAt = new \DateTimeImmutable();
+        $this->users = new ArrayCollection();
     }
 
     public function getId(): RoleId
@@ -60,10 +63,11 @@ class Role
 
     /**
      * @return User[]
+     * Retorna las entidades de usuario como un array nativo (para el dominio)
      */
     public function getUsers(): array
     {
-        return $this->users;
+        return $this->users->toArray();
     }
 }
 

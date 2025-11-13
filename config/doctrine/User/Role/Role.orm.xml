@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping">
 
-    <entity name="Udemy\User\Role\Domain\Role" table="role">
+    <entity name="Udemy\User\Role\Domain\Role" table="&quot;role&quot;">
         <id name="id" type="role_id">
             <generator strategy="NONE"/>
         </id>

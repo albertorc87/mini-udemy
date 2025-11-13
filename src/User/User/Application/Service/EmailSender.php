@@ -6,6 +6,6 @@ namespace Udemy\User\User\Application\Service;
 
 interface EmailSender
 {
-	public function sendConfirmationEmail(string $to, string $name): void;
+	public function sendConfirmationEmail(string $to, string $name, string $confirmationUrl): void;
 }
 

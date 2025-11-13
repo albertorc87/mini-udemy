@@ -1,16 +1,21 @@
 framework:
     messenger:
-        # Uncomment this (and the failed transport below) to send failed messages to this transport for later handling.
-        # failure_transport: failed
+        # Transport para mensajes fallidos
+        failure_transport: failed
 
         transports:
-            # https://symfony.com/doc/current/messenger.html#transport-configuration
-            # async: '%env(MESSENGER_TRANSPORT_DSN)%'
-            # failed: 'doctrine://default?queue_name=failed'
-            async: '%env(MESSENGER_TRANSPORT_DSN)%'
+            # Transport async usando RabbitMQ
+            async:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                retry_strategy:
+                    max_retries: 3
+                    delay: 1000
+                    multiplier: 2
+                    max_delay: 0
+            # Transport para mensajes fallidos
+            failed: 'doctrine://default?queue_name=failed'
 
         routing:
             # Route your messages to the transports
-            # 'App\Message\YourMessage': async
             Udemy\Shared\Domain\Bus\Event\DomainEvent: async
             Udemy\User\User\Domain\Event\UserCreated: async

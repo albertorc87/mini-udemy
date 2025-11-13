@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="https://doctrine-project.org/schemas/orm/doctrine-mapping">
 
-    <entity name="Udemy\Order\Item\Domain\OrderItem" table="order_item">
+    <entity name="Udemy\Order\Item\Domain\OrderItem" table="&quot;order_item&quot;">
         <id name="id" type="order_item_id">
             <generator strategy="NONE"/>
         </id>
